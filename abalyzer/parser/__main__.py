@@ -25,7 +25,7 @@ def is_aba(bank_number):
 
 
 # Parses a user-defined number to see if it is an ACH number
-def is_ach(bank_number):
+def is_eti(bank_number):
     output = False
     bank_number = str(bank_number)
     digits = [int(i) for i in bank_number]
