@@ -1,8 +1,0 @@
-LICENSE
-README.md
-pyproject.toml
-setup.cfg
-src/abalyzer_shivanprasad.egg-info/PKG-INFO
-src/abalyzer_shivanprasad.egg-info/SOURCES.txt
-src/abalyzer_shivanprasad.egg-info/dependency_links.txt
-src/abalyzer_shivanprasad.egg-info/top_level.txt
