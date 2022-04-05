@@ -3,6 +3,7 @@
 # https://usbanksdirectory.com/routing-numbers/
 
 # Import libraries
+import csv
 import os
 
 import pandas
@@ -18,6 +19,14 @@ import aiohttp
 from aiohttp.client import ClientSession
 
 open('unchecked_aba_lookup_table.csv', 'w')
+
+headerList = ['aba_number', 'address', 'state', 'phone_number', 'bank']   # adding header
+
+# open CSV file and assign header
+with open("unchecked_aba_lookup_table.csv", 'w') as file:
+    dw = csv.DictWriter(file, delimiter=',',
+                        fieldnames=headerList)
+    dw.writeheader()
 
 async def parse_website(url:str, start:float, session:ClientSession):
     async with session.get(url) as response:
