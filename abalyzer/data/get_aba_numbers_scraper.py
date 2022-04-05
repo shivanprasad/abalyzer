@@ -4,16 +4,9 @@
 
 # Import libraries
 import csv
-import os
-
-import pandas
 import pandas as pd
-import cloudscraper
-import requests
-from bs4 import BeautifulSoup
 import time
 import re
-from multiprocessing import Pool
 import asyncio
 import aiohttp
 from aiohttp.client import ClientSession
