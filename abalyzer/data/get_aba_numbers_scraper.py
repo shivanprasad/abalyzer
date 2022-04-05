@@ -1,5 +1,6 @@
 # Generates list of ABA numbers from bank-code.net website
 # https://python.plainenglish.io/send-http-requests-as-fast-as-possible-in-python-304134d46604
+# https://usbanksdirectory.com/routing-numbers/
 
 # Import libraries
 import os
@@ -16,7 +17,7 @@ import asyncio
 import aiohttp
 from aiohttp.client import ClientSession
 
-open('aba_lookup_table.csv', 'w')
+open('unchecked_aba_lookup_table.csv', 'w')
 
 async def parse_website(url:str, start:float, session:ClientSession):
     async with session.get(url) as response:
@@ -35,7 +36,7 @@ async def parse_website(url:str, start:float, session:ClientSession):
         table_df.insert(3, '', bank_name)
 
 
-        table_df.to_csv('aba_lookup_table.csv', mode='a', index=True, header=False)
+        table_df.to_csv('unchecked_aba_lookup_table.csv', mode='a', index=True, header=False)
 
         print(f"T+{'%.2f'%time_since_start} {url}")
 
@@ -56,4 +57,4 @@ websites_list = websites_list.iloc[:,1]
 start = time.time()
 asyncio.run(parse_all_websites(websites_list, start))
 end = time.time()
-print(f'download {len(websites_list)} links in {end - start} seconds')
+print(f'Logged {len(websites_list)} website tables in {end - start} seconds')
