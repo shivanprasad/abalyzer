@@ -1,3 +1,7 @@
+# DEPRECATED: Replaced with new scraper using usbanksdirectory.com instead
+
+# Generates list of ABA numbers from bank-code.net website
+
 # Import libraries
 import pandas as pd
 import cloudscraper
@@ -166,12 +170,12 @@ aba_lookup_table = {'aba_number': [],
                     'bank_name': []
                     }
 
-for website in websites_list[:1]:
+for website in websites_list[:len(websites_list)]:
     scraper = cloudscraper.create_scraper()  # returns a CloudScraper instance
     tries = 0
     url = website
     page = scraper.get(url)
-    time.sleep(0.5)
+    time.sleep(0.25)
 
     while tries < 15:
         scraper = cloudscraper.create_scraper()         # returns a CloudScraper instance
@@ -180,23 +184,16 @@ for website in websites_list[:1]:
         if page.status_code != 200:
             tries = tries + 1
             print(f"*** The response for {url} is {page.status_code}")
-            time.sleep(1)
+            time.sleep(0.5)
         else:
             table = pd.read_html(page.text, index_col=0)         # aba table parsed from bank-code.net
-            # del table[0]
-            # print(table)
             table_df = pd.DataFrame(table[0])
-            print(table_df.to_string())
-
             parsed_page = BeautifulSoup(page.text, features='lxml')
             bank_name = parsed_page.body.find('h1', attrs={'class': 'text-center'}).text
             bank_name = bank_name[:-18]         # bank name parsed from bank-code.net
-            # print(table_df)
-
-            # table = table.append(table_df.iloc[][])
 
             for row in range(len(table_df)):
-                if len(str(table_df.iloc[row, 0])) != 99:
+                if len(str(table_df.iloc[row, 0])) == 9:
                     print(str(table_df.iloc[row, 0]))
                     aba_lookup_table['aba_number'].append(str(table_df.iloc[row, 0]))
                     aba_lookup_table['address'].append(str(table_df.iloc[row, 1]))
@@ -209,5 +206,6 @@ for website in websites_list[:1]:
         print("15 CONNECTIONS ATTEMPTED, POSSIBLE IP BAN, VISIT bank-code.net IN BROWSER, IF NOT BANNED RESTART SCRIPT")
 
 
-# aba_lookup_table = pd.DataFrame(aba_lookup_table)
-print(aba_lookup_table)
+aba_lookup_table = pd.DataFrame(aba_lookup_table)
+aba_lookup_table = aba_lookup_table.iloc[:, 1:]   # removes column numbers
+aba_lookup_table.to_csv("old_aba_lookup_table.csv")

@@ -1,0 +1,1 @@
+To obtain list of websites use photon (https://github.com/s0md3v/Photon/) and run: python3 photon.py -u https://usbanksdirectory.com/routing-numbers/ -l 2 -t 30

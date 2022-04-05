@@ -1,10 +1,19 @@
-import array
+import pandas as pd
+import os
+
+script_dir = os.path.dirname(__file__)  # Script directory
+aba_lookup_table_path = os.path.join(script_dir, '../data/old_aba_lookup_table.csv')
 
 
 # Parses an ACH number and returns information about it
 def parse_aba(bank_number):
-    return 0
+    bank_number = int(bank_number)
+    aba_lookup_table = pd.read_csv(aba_lookup_table_path)
 
+    if is_aba(bank_number):
+        for i in range(len(aba_lookup_table)):
+            if aba_lookup_table.aba_number[i] == bank_number:
+                return (aba_lookup_table.iloc[i])
 
 # Parses a user-defined number to see if it is an ABA number
 # https://en.wikipedia.org/wiki/ABA_routing_transit_number
@@ -41,15 +50,8 @@ def is_eti(bank_number):
 
     return output
 
-
-def aba_state(bank_number):
-    output = "null"
-    bank_number = str(bank_number)
-    digits = [int(i) for i in bank_number]
-
-
-
 number = "026009593"
-print(aba_state(number))
 print(is_aba(number))
 print(is_eti(number))
+
+print(parse_aba(number))
