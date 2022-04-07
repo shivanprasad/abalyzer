@@ -11,12 +11,12 @@ import asyncio
 import aiohttp
 from aiohttp.client import ClientSession
 
-open('unchecked_aba_lookup_table.csv', 'w')
+open('temp/unchecked_aba_lookup_table.csv', 'w')
 
 headerList = ['aba_number', 'address', 'state', 'phone_number', 'bank']   # adding header
 
 # open CSV file and assign header
-with open("unchecked_aba_lookup_table.csv", 'w') as file:
+with open("temp/unchecked_aba_lookup_table.csv", 'w') as file:
     dw = csv.DictWriter(file, delimiter=',',
                         fieldnames=headerList)
     dw.writeheader()
@@ -38,7 +38,7 @@ async def parse_website(url:str, start:float, session:ClientSession):
         table_df.insert(3, '', bank_name)
 
 
-        table_df.to_csv('unchecked_aba_lookup_table.csv', mode='a', index=True, header=False)
+        table_df.to_csv('temp/unchecked_aba_lookup_table.csv', mode='a', index=True, header=False)
 
         print(f"T+{'%.2f'%time_since_start} {url}")
 
@@ -52,7 +52,7 @@ async def parse_all_websites(urls:str, start:float):
             tasks.append(task)
         await asyncio.gather(*tasks,return_exceptions=True)   # the await must be nest inside of the session
 
-websites_list = pd.read_csv (r'websites_list.csv')
+websites_list = pd.read_csv (r'temp/websites_list.csv')
 websites_list = websites_list.iloc[:,1]
 # final_list = pandas.DataFrame()
 

@@ -2,7 +2,7 @@ import re
 import numpy as np
 import pandas as pd
 
-filename = "unfiltered_websites_list.txt"
+filename = "temp/unfiltered_websites_list.txt"
 data = np.loadtxt(filename, delimiter='\n', dtype=str)
 filtered = []
 for i in range(len(data)):
