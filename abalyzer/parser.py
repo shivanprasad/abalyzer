@@ -2,7 +2,7 @@ import pandas as pd
 import os
 
 script_dir = os.path.dirname(__file__)  # Script directory
-aba_lookup_table_path = os.path.join(script_dir, '../data/aba_lookup_table.csv')
+aba_lookup_table_path = os.path.join(script_dir, 'data/aba_lookup_table.csv')
 
 
 # Parses an ACH number and returns information about it
